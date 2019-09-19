@@ -2,7 +2,7 @@
 import json
 
 
-class Move(object):
+class Action(object):
     def __init__(self, ship_uid, rotation, forward):
         self.ship_uid = ship_uid
         self.rotation = rotation
@@ -17,10 +17,10 @@ class Move(object):
 
     @staticmethod
     def from_dict(d):
-        return Move(d['ship_uid'], d['rotation'], d['forward'])
+        return Action(d['ship_uid'], d['rotation'], d['forward'])
 
     def __eq__(self, other):
-        return isinstance(other, Move) and self.to_dict() == other.to_dict()
+        return isinstance(other, Action) and self.to_dict() == other.to_dict()
 
     def __hash__(self):
         return hash(str(self))

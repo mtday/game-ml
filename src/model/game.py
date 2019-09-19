@@ -1,8 +1,8 @@
 
+from .action import Action
 from .location import Location
-from .move import Move
 from .ship import Ship
-from .world import World
+from .environment import Environment
 
 import json
 import random
@@ -17,8 +17,8 @@ class Game(object):
         self.ship_size = ship_size
         self.ship_speed = ship_speed
 
-        self.world = self._random_world()
-        self.moves = []
+        self.environment = self._random_environment()
+        self.actions = []
 
     def to_dict(self):
         return {
@@ -28,16 +28,16 @@ class Game(object):
             'num_ships': self.num_ships,
             'ship_size': self.ship_size,
             'ship_speed': self.ship_speed,
-            'moves': [move.to_dict() for move in self.moves]
+            'actions': [action.to_dict() for action in self.actions]
         }
 
     @staticmethod
     def from_dict(d):
         game = Game(d['random_seed'], d['width'], d['height'], d['num_ships'], d['ship_size'], d['ship_speed'])
-        game.moves = [Move.from_dict(m) for m in d['moves']]
+        game.actions = [Action.from_dict(a) for a in d['actions']]
         return game
 
-    def _random_world(self):
+    def _random_environment(self):
         random.seed(self.random_seed)
 
         # generate some random ships
@@ -58,8 +58,8 @@ class Game(object):
                 uid = str(len(ships) + 1)
                 ships.append(Ship(uid, random_location, random_orientation, self.ship_size, self.ship_speed))
 
-        # create the world
-        return World(self.width, self.height, ships)
+        # create the environment
+        return Environment(self.width, self.height, ships)
 
     def run(self):
         pass

@@ -4,7 +4,7 @@ from .ship import Ship
 import json
 
 
-class World(object):
+class Environment(object):
     def __init__(self, width, height, ships):
         self.width = width
         self.height = height
@@ -20,20 +20,20 @@ class World(object):
     @staticmethod
     def from_dict(d):
         ships = [Ship.from_dict(s) for s in d['ships']]
-        return World(d['width'], d['height'], ships)
+        return Environment(d['width'], d['height'], ships)
 
-    def apply_move(self, move):
+    def apply_action(self, action):
         for ship in self.ships:
-            if ship.uid == move.ship_uid:
-                ship.orientation = (ship.orientation + move.rotation) % 360
-                if move.forward:
+            if ship.uid == action.ship_uid:
+                ship.orientation = (ship.orientation + action.rotation) % 360
+                if action.forward:
                     ship.location.translate(ship.speed, ship.orientation)
                     self._validate_ship_positions()
         return self
 
-    def apply_moves(self, moves):
-        for move in moves:
-            self.apply_move(move)
+    def apply_actions(self, actions):
+        for action in actions:
+            self.apply_action(action)
         return self
 
     def _validate_ship_positions(self):
@@ -60,7 +60,7 @@ class World(object):
                     raise Exception('Ships {} and {} collided'.format(ship1.uid, ship2.uid))
 
     def __eq__(self, other):
-        return isinstance(other, World) and self.to_dict() == other.to_dict()
+        return isinstance(other, Environment) and self.to_dict() == other.to_dict()
 
     def __hash__(self):
         return hash(str(self))
