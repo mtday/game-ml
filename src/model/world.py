@@ -1,6 +1,5 @@
 
 import json
-import math
 
 
 class World(object):
