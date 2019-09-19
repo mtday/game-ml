@@ -10,11 +10,11 @@ class TestWorld(unittest.TestCase):
         ship1 = Ship('1', Location(1, 2), 8, 90)
         ship2 = Ship('2', Location(1, 2), 12, 90)
         world = World(300, 200, [ship1, ship2])
-        self.assertEqual(world.width, 300)
-        self.assertEqual(world.height, 200)
-        self.assertEqual(len(world.ships), 2)
-        self.assertEqual(world.ships[0], ship1)
-        self.assertEqual(world.ships[1], ship2)
+        self.assertEqual(300, world.width)
+        self.assertEqual(200, world.height)
+        self.assertEqual(2, len(world.ships))
+        self.assertEqual(ship1, world.ships[0])
+        self.assertEqual(ship2, world.ships[1])
 
     def test_to_dict(self):
         ship1 = Ship('1', Location(1, 2), 8, 90)
@@ -28,7 +28,7 @@ class TestWorld(unittest.TestCase):
                 ship2.to_dict()
             ]
         }
-        self.assertEqual(world.to_dict(), expected)
+        self.assertEqual(expected, world.to_dict())
 
 
 if __name__ == '__main__':
