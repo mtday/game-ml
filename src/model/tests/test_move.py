@@ -14,6 +14,10 @@ class TestMove(unittest.TestCase):
         move = Move('ship_uid', -5, True)
         self.assertEqual({'ship_uid': 'ship_uid', 'rotation': -5, 'forward': True}, move.to_dict())
 
+    def test_from_dict(self):
+        move = Move('ship_uid', -5, True)
+        self.assertEqual(move, Move.from_dict(move.to_dict()))
+
     def test_repr(self):
         move = Move('ship_uid', -5, True)
         self.assertEqual('{"ship_uid": "ship_uid", "rotation": -5, "forward": true}', str(move))

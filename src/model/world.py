@@ -1,4 +1,6 @@
 
+from .ship import Ship
+
 import json
 
 
@@ -14,6 +16,11 @@ class World(object):
             'height': self.height,
             'ships': [ship.to_dict() for ship in self.ships]
         }
+
+    @staticmethod
+    def from_dict(d):
+        ships = [Ship.from_dict(s) for s in d['ships']]
+        return World(d['width'], d['height'], ships)
 
     def apply_move(self, move):
         for ship in self.ships:
@@ -60,4 +67,3 @@ class World(object):
 
     def __repr__(self):
         return json.dumps(self.to_dict())
-

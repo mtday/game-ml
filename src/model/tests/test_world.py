@@ -31,6 +31,12 @@ class TestWorld(unittest.TestCase):
         }
         self.assertEqual(expected, world.to_dict())
 
+    def test_from_dict(self):
+        ship1 = Ship('1', Location(1, 2), 90, 8, 6)
+        ship2 = Ship('2', Location(1, 2), 90, 12, 4)
+        world = World(300, 200, [ship1, ship2])
+        self.assertEqual(world, World.from_dict(world.to_dict()))
+
     def test_apply_move(self):
         ship = Ship('uid', Location(150, 100), 90, 8, 6)
         world = World(300, 200, [ship])

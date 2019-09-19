@@ -26,6 +26,10 @@ class TestShip(unittest.TestCase):
             'speed': 12
         }, ship.to_dict())
 
+    def test_from_dict(self):
+        ship = Ship('uid', Location(1, 2), 90, 8, 12)
+        self.assertEqual(ship, Ship.from_dict(ship.to_dict()))
+
     def test_repr(self):
         ship = Ship('uid', Location(1, 2), 90, 8, 12)
         self.assertEqual('{"uid": "uid", "location": {"x": 1, "y": 2}, "orientation": 90, "size": 8, "speed": 12}',

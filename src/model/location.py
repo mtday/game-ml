@@ -14,6 +14,10 @@ class Location(object):
             'y': self.y
         }
 
+    @staticmethod
+    def from_dict(d):
+        return Location(d['x'], d['y'])
+
     """
     Direction is in degrees with:
       0 = Right

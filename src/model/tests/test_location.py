@@ -11,6 +11,10 @@ class TestLocation(unittest.TestCase):
     def test_to_dict(self):
         self.assertEqual({'x': 1, 'y': 2}, Location(1, 2).to_dict())
 
+    def test_from_dict(self):
+        location = Location(1, 2)
+        self.assertEqual(location, Location.from_dict(location.to_dict()))
+
     def test_translate(self):
         # translate 20 pixels right (0 degrees)
         self.assertEqual(120, Location(100, 100).translate(20, 0).x)

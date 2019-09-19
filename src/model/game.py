@@ -1,5 +1,6 @@
 
 from .location import Location
+from .move import Move
 from .ship import Ship
 from .world import World
 
@@ -19,7 +20,22 @@ class Game(object):
         self.world = self._random_world()
         self.moves = []
 
-        self.initial_world = self.world.to_dict()
+    def to_dict(self):
+        return {
+            'random_seed': self.random_seed,
+            'width': self.width,
+            'height': self.height,
+            'num_ships': self.num_ships,
+            'ship_size': self.ship_size,
+            'ship_speed': self.ship_speed,
+            'moves': [move.to_dict() for move in self.moves]
+        }
+
+    @staticmethod
+    def from_dict(d):
+        game = Game(d['random_seed'], d['width'], d['height'], d['num_ships'], d['ship_size'], d['ship_speed'])
+        game.moves = [Move.from_dict(m) for m in d['moves']]
+        return game
 
     def _random_world(self):
         random.seed(self.random_seed)
@@ -49,15 +65,5 @@ class Game(object):
         pass
 
     def save(self, file_path):
-        data = {
-            'random_seed': self.random_seed,
-            'width': self.width,
-            'height': self.height,
-            'num_ships': self.num_ships,
-            'ship_size': self.ship_size,
-            'ship_speed': self.ship_speed,
-            'initial_world': self.initial_world,
-            'moves': [move.to_dict() for move in self.moves]
-        }
         with open(file_path, 'w') as file:
-            file.write(json.dumps(data, indent=2))
+            file.write(json.dumps(self.to_dict(), indent=2))

@@ -15,6 +15,10 @@ class Move(object):
             'forward': self.forward
         }
 
+    @staticmethod
+    def from_dict(d):
+        return Move(d['ship_uid'], d['rotation'], d['forward'])
+
     def __eq__(self, other):
         return isinstance(other, Move) and self.to_dict() == other.to_dict()
 

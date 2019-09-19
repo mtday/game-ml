@@ -1,4 +1,6 @@
 
+from .location import Location
+
 import json
 
 
@@ -18,6 +20,11 @@ class Ship(object):
             'size': self.size,
             'speed': self.speed
         }
+
+    @staticmethod
+    def from_dict(d):
+        location = Location.from_dict(d['location'])
+        return Ship(d['uid'], location, d['orientation'], d['size'], d['speed'])
 
     def __eq__(self, other):
         return isinstance(other, Ship) and self.to_dict() == other.to_dict()
