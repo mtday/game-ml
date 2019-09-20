@@ -1,5 +1,6 @@
 
 from model import Game
+from viewer import Viewer
 
 
 RANDOM_SEED = 1
@@ -14,5 +15,8 @@ if __name__ == '__main__':
     game = Game(RANDOM_SEED, WIDTH, HEIGHT, SHIPS, SHIP_SIZE, SHIP_SPEED)
     game.run()
     game.save('/tmp/game_{}.json'.format(RANDOM_SEED))
+
+    viewer = Viewer(game)
+    viewer.run()
 
 
